@@ -1,58 +1,89 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
+    <h1>Hello</h1>
+    <textarea 
+      name="cli-input" 
+      id="cli-input" 
+      v-model="message"
+      @input="updateValue()"
+      ref="input"
+      ></textarea>
+    <p class = "cliDisplay">
+      <span class="cliDisplay__userInput">{{ message }}</span>
+      <span class="cliDisplay__autoFill">{{ autofill }}</span>
     </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
   </div>
 </template>
 
 <script>
 export default {
   name: "HelloWorld",
-  props: {
-    msg: String
+  data: function() {
+    return {
+      message: "",
+      autofill: "",
+      commands: [
+        // commands autofill in order of this list
+        ["left", ["Angle", "Speed", "Acceleration", "Delay"]],
+        ["lockwheels", ["end", "side"]],
+        ["loadconfig", ["name", "version"]]
+      ]
+    };
+  },
+  methods: {
+    updateValue: function() {
+      const msgLength = this.message.length;
+      for (var command of this.commands) {
+        // checks to see if entered text matches command
+        if (
+          command[0].substring(0, msgLength) === this.message &&
+          msgLength > 0
+        ) {
+          // constructs autofill for first command that matches
+          const cmdEnd = command[0].substring(msgLength, command[0].length);
+          let cmdVars = "[ " + command[1].toString() + " ]";
+          cmdVars = cmdVars.replace(/,/gi, ", ");
+          this.autofill = cmdEnd + " " + cmdVars;
+          return;
+        } else {
+          // when command no longer matches autofill is emptied
+          this.autofill = "";
+        }
+      }
+      if (this.message === "foo") {
+        this.message = "bar";
+      }
+    }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
+#cli-input {
+  width: 100%;
+  resize: none;
+
+  // &:focus {
+  //   height: 0;
+  //   margin: 0;
+  //   padding: 0;
+  //   border: none;
+  // }
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+
+.cliDisplay {
+  background-color: #d8d8dd;
+  padding: 1rem;
+  border-radius: 4px;
+
+  &__userInput {
+    color: #2d2d2d;
+    font-weight: bold;
+  }
+
+  &__autoFill {
+    color: #878787;
+  }
 }
 </style>

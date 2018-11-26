@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <cli-input/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import cliInput from "@/components/input.vue";
 
 export default {
   name: "home",
   components: {
-    HelloWorld
+    "cli-input": cliInput
   }
 };
 </script>
@@ -20,5 +20,7 @@ export default {
 .home {
   width: 600px;
   margin: 0 auto;
+  text-align: center;
+  color: #878787;
 }
 </style>

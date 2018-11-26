@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Hello</h1>
+    <h1>CubeRover CLI Demo</h1>
     <textarea 
       name="cli-input" 
       id="cli-input" 
@@ -76,6 +76,7 @@ export default {
   background-color: #d8d8dd;
   padding: 1rem;
   border-radius: 4px;
+  text-align: left;
 
   &__userInput {
     color: #2d2d2d;

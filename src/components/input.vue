@@ -15,9 +15,9 @@
       <span class="cliDisplay__autoFill">{{ autofill }}</span>
     </p>
     <p class = "cliDisplay" v-if="increment > 0">
-      <span class="cliDisplay__userInput">{{ command.name }} [ </span>
-      <span class="cliDisplay__autoFill" v-for="(item, index) in commands[command.name].variables" v-bind:key="index">{{ item }}, </span>
-      <span class="cliDisplay__userInput"> ]</span>
+      <span class="cliDisplay__userInput">{{ command.name }} [ {{ preFocused }}</span>
+      <span class="cliDisplay__focused">{{ focused }}</span>
+      <span class="cliDisplay__userInput">{{postFocused}} ]</span>
     </p>
   </div>
 </template>
@@ -29,6 +29,9 @@ export default {
     return {
       userInput: "",
       autofill: "",
+      focused: "",
+      preFocused: "",
+      postFocused: "",
       increment: 0,
       command: {
         name: ""
@@ -41,23 +44,63 @@ export default {
         },
         lockwheels: {
           name: "lockwheels",
-          variables: ["end", "side"]
+          variables: ["End", "Side"]
         },
         loadconfig: {
           name: "loadconfig",
-          variables: ["name", "version"]
+          variables: ["Name", "Version"]
+        }
+      },
+      variables: {
+        Angle: {
+          default: "0",
+          units: "&deg;"
+        },
+        Speed: {
+          default: "4",
+          units: "cm/s"
+        },
+        Acceleration: {
+          default: "1",
+          units: ""
+        },
+        Delay: {
+          default: "0",
+          units: "s"
+        },
+        End: {
+          default: "",
+          units: ""
+        },
+        Side: {
+          default: "",
+          units: ""
+        },
+        Name: {
+          default: "",
+          units: ""
+        },
+        Version: {
+          default: "",
+          units: ""
         }
       }
     };
   },
   methods: {
     tabPressed: function() {
-      // Is this a command or variable
-      // If it is a command make sure command is complete or autofill it.
-      // fillcommand()
-      // if it is a variable
-      // fill var()
+      if (this.increment == 0) {
+        for (let key in this.commands) {
+          let cmdName = this.commands[key].name;
+          if (cmdName.substring(0, this.userInput.length) === this.userInput) {
+            this.fillCommand(cmdName);
+          }
+        }
+      } else {
+        this.fillVar();
+      }
       this.increment++;
+      this.autoFill();
       // Is this the end of the command?
       // reset increment
     },
@@ -79,6 +122,7 @@ export default {
     autoFill: function() {
       let cmdFill = "";
       let varFill = "";
+      // autofill if we are typing command
       if (this.increment === 0) {
         for (let key in this.commands) {
           let cmdName = this.commands[key].name;
@@ -89,21 +133,55 @@ export default {
             break;
           }
         }
+        this.autofill = cmdFill + " " + varFill;
+      } else {
+        // autofill if we are typing variable
+        var index = 0;
+        this.preFocused = "";
+        this.focused = "";
+        this.postFocused = "";
+        for (let variable of this.commands[this.command.name].variables) {
+          index++;
+          if (
+            this.increment > this.commands[this.command.name].variables.length
+          ) {
+            this.increment = 1;
+          }
+          if (index < this.increment) {
+            this.preFocused += variable + ", ";
+          } else if (index == this.increment) {
+            this.focused = variable;
+          } else {
+            this.postFocused += variable + ", ";
+          }
+        }
+        // Removes trailing comma and space.
+        this.postFocused = this.postFocused.slice(0, -2);
+        index = 0;
       }
-      this.autofill = cmdFill + " " + varFill;
     },
     fillCommand: function(cmdName) {
       this.command.name = cmdName;
       this.userInput = "";
       this.increment++;
-      console.log(this.command);
       // set command name to command
       // set user input to ""
       // increment ++
     },
     fillVar: function() {
-      // add command key and if there is no value autofull that
-      // set user input to empty
+      let variable = this.commands[this.command.name].variables[
+        this.increment - 1
+      ];
+      if (this.userInput == "" && this.command[variable] == undefined) {
+        this.command[variable] = this.variables[variable].default;
+        console.log(this.command);
+      } else {
+        if (this.userInput != "") {
+          this.command[variable] = this.userInput;
+        }
+        this.userInput = "";
+        console.log(this.command);
+      }
     }
   }
 };
@@ -136,6 +214,16 @@ export default {
 
   &__autoFill {
     color: #878787;
+  }
+
+  &__focused {
+    background-color: #2d2d2d;
+    border-radius: 4px;
+    color: #f1f1f1;
+    padding: 8px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-right: 4px;
   }
 }
 </style>

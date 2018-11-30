@@ -4,7 +4,91 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    commands: {
+      // commands autofill in order of this list
+      forward: {
+        name: "forward",
+        variables: ["Distance", "Speed", "Acceleration", "Delay"]
+      },
+      reverse: {
+        name: "reverse",
+        variables: ["Distance", "Speed", "Acceleration", "Delay"]
+      },
+      left: {
+        name: "left",
+        variables: ["Angle", "Speed", "Acceleration", "Delay"]
+      },
+      right: {
+        name: "right",
+        variables: ["Angle", "Speed", "Acceleration", "Delay"]
+      },
+      lockwheels: {
+        name: "lockwheels",
+        variables: ["End", "Side"]
+      },
+      loadconfig: {
+        name: "loadconfig",
+        variables: ["Name", "Version"]
+      }
+    },
+    history: [
+      {
+        name: "left",
+        speed: "12",
+        delay: "12",
+        angle: "23",
+        acceleration: "1",
+        status: "complete"
+      },
+      {
+        name: "left",
+        speed: "12",
+        delay: "12",
+        angle: "23",
+        acceleration: "1",
+        status: "complete"
+      }
+    ],
+    variables: {
+      Angle: {
+        default: "0",
+        units: "deg"
+      },
+      Distance: {
+        default: "0",
+        units: "cm"
+      },
+      Speed: {
+        default: "4",
+        units: "cm/s"
+      },
+      Acceleration: {
+        default: "1",
+        units: ""
+      },
+      Delay: {
+        default: "0",
+        units: "s"
+      },
+      End: {
+        default: "",
+        units: ""
+      },
+      Side: {
+        default: "",
+        units: ""
+      },
+      Name: {
+        default: "",
+        units: ""
+      },
+      Version: {
+        default: "",
+        units: ""
+      }
+    }
+  },
   mutations: {},
   actions: {}
 });

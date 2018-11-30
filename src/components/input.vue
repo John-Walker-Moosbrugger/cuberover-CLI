@@ -38,72 +38,8 @@ export default {
       command: {
         name: ""
       },
-      history: [],
-      commands: {
-        // commands autofill in order of this list
-        forward: {
-          name: "forward",
-          variables: ["Distance", "Speed", "Acceleration", "Delay"]
-        },
-        reverse: {
-          name: "reverse",
-          variables: ["Distance", "Speed", "Acceleration", "Delay"]
-        },
-        left: {
-          name: "left",
-          variables: ["Angle", "Speed", "Acceleration", "Delay"]
-        },
-        right: {
-          name: "right",
-          variables: ["Angle", "Speed", "Acceleration", "Delay"]
-        },
-        lockwheels: {
-          name: "lockwheels",
-          variables: ["End", "Side"]
-        },
-        loadconfig: {
-          name: "loadconfig",
-          variables: ["Name", "Version"]
-        }
-      },
-      variables: {
-        Angle: {
-          default: "0",
-          units: "deg"
-        },
-        Distance: {
-          default: "0",
-          units: "cm"
-        },
-        Speed: {
-          default: "4",
-          units: "cm/s"
-        },
-        Acceleration: {
-          default: "1",
-          units: ""
-        },
-        Delay: {
-          default: "0",
-          units: "s"
-        },
-        End: {
-          default: "",
-          units: ""
-        },
-        Side: {
-          default: "",
-          units: ""
-        },
-        Name: {
-          default: "",
-          units: ""
-        },
-        Version: {
-          default: "",
-          units: ""
-        }
-      }
+      commands: this.$store.state.commands,
+      variables: this.$store.state.variables
     };
   },
   methods: {
@@ -127,12 +63,13 @@ export default {
 
     enterPressed: function() {
       if (this.command.name != "") {
-        this.history.push(this.command);
+        this.command.status = "waiting";
+        this.$store.state.history.push(this.command);
         this.command = { name: "" };
         this.userInput = "";
         this.increment = 0;
       }
-      console.log(this.history);
+      console.log(this.$store.state.history);
     },
 
     escapePressed: function() {

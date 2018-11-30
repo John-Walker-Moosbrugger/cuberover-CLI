@@ -1,38 +1,24 @@
 <template>
   <div id="History">
-    <div
+    <cli-history
       id="history-item"
-      v-for="(item, key) in history"
+      v-for="(item, key) in this.$store.state.history"
       v-bind:key="key"
-      v-bind:title="item.title"
-    ></div>
+      v-bind:item="item"
+    ></cli-history>
   </div>
 </template>
 
 <script>
+import cliHistory from "@/components/History-Item.vue";
+
 export default {
-  name: "home",
+  name: "history",
   data: function() {
-    return {
-      history: [
-        {
-          name: "left",
-          speed: "12",
-          delay: "12",
-          angle: "23",
-          acceleration: "1",
-          status: "complete"
-        },
-        {
-          name: "left",
-          speed: "12",
-          delay: "12",
-          angle: "23",
-          acceleration: "1",
-          status: "complete"
-        }
-      ]
-    };
+    return {};
+  },
+  components: {
+    "cli-history": cliHistory
   }
 };
 </script>

@@ -25,6 +25,6 @@ export default {
 
 <style lang="scss" scoped>
 #History {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 150px);
 }
 </style>

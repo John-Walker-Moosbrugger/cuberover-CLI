@@ -17,7 +17,7 @@
       <span class="cliDisplay__autoFill">{{ autofill }}</span>
     </p>
     <p class = "cliDisplay" v-if="increment > 0">
-      <span class="cliDisplay__userInput">>  {{ command.name }} [ {{ preFocused }}</span>
+      <span class="cliDisplay__userInput">>  {{ command.Name }} [ {{ preFocused }}</span>
       <span class="cliDisplay__focused">{{ focused }}</span>
       <span class="cliDisplay__userInput">{{postFocused}} ]</span>
     </p>
@@ -36,7 +36,7 @@ export default {
       postFocused: "",
       increment: 0,
       command: {
-        name: ""
+        Name: ""
       },
       commands: this.$store.state.commands,
       variables: this.$store.state.variables
@@ -62,12 +62,21 @@ export default {
     },
 
     enterPressed: function() {
-      if (this.command.name != "") {
+      if (this.command.Name != "") {
+        this.tabPressed();
+        for (let variable of this.commands[this.command.Name].variables) {
+          if (this.command[variable] == undefined) {
+            this.command[variable] = this.variables[variable].default;
+          }
+        }
         this.command.status = "waiting";
+        let time = new Date();
+        this.command.Time = time.getTime();
         this.$store.state.history.push(this.command);
         this.command = { name: "" };
         this.userInput = "";
         this.increment = 0;
+        this.autofill = "";
       }
       console.log(this.$store.state.history);
     },
@@ -113,10 +122,10 @@ export default {
         this.preFocused = "";
         this.focused = "";
         this.postFocused = "";
-        for (let variable of this.commands[this.command.name].variables) {
+        for (let variable of this.commands[this.command.Name].variables) {
           index++;
           if (
-            this.increment > this.commands[this.command.name].variables.length
+            this.increment > this.commands[this.command.Name].variables.length
           ) {
             this.increment = 1;
           }
@@ -145,7 +154,7 @@ export default {
     },
 
     fillCommand: function(cmdName) {
-      this.command.name = cmdName;
+      this.command.Name = cmdName;
       this.userInput = "";
       this.increment++;
       // set command name to command
@@ -154,7 +163,7 @@ export default {
     },
 
     fillVar: function() {
-      let variable = this.commands[this.command.name].variables[
+      let variable = this.commands[this.command.Name].variables[
         this.increment - 1
       ];
       if (this.userInput == "" && this.command[variable] == undefined) {

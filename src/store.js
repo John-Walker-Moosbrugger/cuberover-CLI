@@ -29,25 +29,27 @@ export default new Vuex.Store({
       },
       loadconfig: {
         name: "loadconfig",
-        variables: ["Name", "Version"]
+        variables: ["Config", "Version"]
       }
     },
     history: [
       {
-        name: "left",
-        speed: "12",
-        delay: "12",
-        angle: "23",
-        acceleration: "1",
-        status: "complete"
+        Name: "left",
+        Speed: "12",
+        Delay: "12",
+        Angle: "23",
+        Acceleration: "1",
+        Time: "12:15:15",
+        Status: "complete"
       },
       {
-        name: "left",
-        speed: "12",
-        delay: "12",
-        angle: "23",
-        acceleration: "1",
-        status: "complete"
+        Name: "left",
+        Speed: "12",
+        Delay: "12",
+        Angle: "23",
+        Acceleration: "1",
+        Time: "12:15:49",
+        Status: "complete"
       }
     ],
     variables: {
@@ -79,7 +81,7 @@ export default new Vuex.Store({
         default: "",
         units: ""
       },
-      Name: {
+      Config: {
         default: "",
         units: ""
       },

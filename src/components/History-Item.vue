@@ -2,9 +2,9 @@
   <div class="his-item">
     <div class="his__main">
       <div class="his__main--command">{{ command }}</div>
-      <div class="his__main--time">{{time}}</div>
+      <div class="his__main--time">{{ timestamp }}</div>
     </div>
-    <div class="his__status">{{ item.status }}</div>
+    <div class="his__status"></div>
   </div>
 </template>
 
@@ -13,24 +13,31 @@ export default {
   name: "cli-history",
   props: ["item"],
   data: function() {
-    return {
-      time: "12:15"
-    };
+    return {};
   },
   computed: {
     command: function() {
-      let variables = this.$store.state.commands[this.item.name].variables;
-      let name = this.$store.state.commands[this.item.name].name;
+      let variables = this.$store.state.commands[this.item.Name].variables;
+      let name = this.$store.state.commands[this.item.Name].name;
       let title = name + " [ ";
       let tempVar = "";
       for (let variable of variables) {
-        let lower = variable.toLowerCase();
+        let lower = variable;
         tempVar =
           this.item[lower] + this.$store.state.variables[variable].units;
         title += tempVar + ", ";
       }
       title = title.slice(0, -2) + " ]";
       return title;
+    },
+    timestamp: function() {
+      const seconds = this.item.Time / 1000;
+      const minutes = this.item.Time / (seconds * 60);
+      const hours = this.item.Time / (minutes * 60);
+      seconds = seconds % 60;
+      minutes = minutes % 60;
+      hours = hours % 24;
+      return hours + ":" + minutes + ":" + seconds;
     }
   }
 };
@@ -41,6 +48,7 @@ export default {
   &-item {
     color: #e5e5e5;
     text-align: left;
+    margin-top: 20px;
   }
   &__main {
     display: flex;

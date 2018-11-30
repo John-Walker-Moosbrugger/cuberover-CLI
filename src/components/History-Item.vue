@@ -31,12 +31,12 @@ export default {
       return title;
     },
     timestamp: function() {
-      const seconds = this.item.Time / 1000;
-      const minutes = this.item.Time / (seconds * 60);
-      const hours = this.item.Time / (minutes * 60);
-      seconds = seconds % 60;
-      minutes = minutes % 60;
-      hours = hours % 24;
+      let seconds = this.item.Time / 1000;
+      let minutes = seconds / 60;
+      let hours = minutes / 24;
+      seconds = Math.floor(seconds % 60);
+      minutes = Math.floor(minutes % 60);
+      hours = Math.floor(hours % 24);
       return hours + ":" + minutes + ":" + seconds;
     }
   }
@@ -58,6 +58,11 @@ export default {
     border-radius: 4px 4px 0px 0px;
     padding: 10px;
     padding-left: 40px;
+
+    &--time {
+      margin-left: 70px;
+      margin-right: 20px;
+    }
   }
   &__status {
     padding-left: 40px;

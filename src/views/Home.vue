@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <cli-history/>
-    <cli-input/>
+    <cli-history id="cli-history"/>
+    <cli-input id="cli-inputed"/>
   </div>
 </template>
 
@@ -21,10 +21,23 @@ export default {
 
 <style lang="scss" scoped>
 .home {
+  padding: 0px 100px;
   margin: 0;
-  width: 100%;
   margin: 0 auto;
   text-align: center;
   color: #878787;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+#cli- {
+  &history {
+    flex: 1 1 0;
+  }
+
+  &inputed {
+    flex: 0 0 0;
+  }
 }
 </style>

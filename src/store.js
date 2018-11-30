@@ -32,26 +32,7 @@ export default new Vuex.Store({
         variables: ["Config", "Version"]
       }
     },
-    history: [
-      {
-        Name: "left",
-        Speed: "12",
-        Delay: "12",
-        Angle: "23",
-        Acceleration: "1",
-        Time: "12:15:15",
-        Status: "complete"
-      },
-      {
-        Name: "left",
-        Speed: "12",
-        Delay: "12",
-        Angle: "23",
-        Acceleration: "1",
-        Time: "12:15:49",
-        Status: "complete"
-      }
-    ],
+    history: [],
     variables: {
       Angle: {
         default: "0",

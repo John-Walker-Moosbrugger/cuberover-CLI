@@ -19,7 +19,7 @@
     <p class = "cliDisplay" v-if="increment > 0">
       <span class="cliDisplay__userInput">>  {{ command.Name }} [ {{ preFocused }}</span>
       <span class="cliDisplay__focused">{{ focused }}</span>
-      <span class="cliDisplay__userInput">{{postFocused}} ]</span>
+      <span class="cliDisplay__userInput"> {{postFocused}} ]</span>
     </p>
   </div>
 </template>
@@ -57,8 +57,6 @@ export default {
         this.increment++;
       }
       this.autoFill();
-      // Is this the end of the command?
-      // reset increment
     },
 
     enterPressed: function() {
@@ -78,7 +76,6 @@ export default {
         this.increment = 0;
         this.autofill = "";
       }
-      console.log(this.$store.state.history);
     },
 
     escapePressed: function() {
@@ -157,9 +154,6 @@ export default {
       this.command.Name = cmdName;
       this.userInput = "";
       this.increment++;
-      // set command name to command
-      // set user input to ""
-      // increment ++
     },
 
     fillVar: function() {
@@ -193,23 +187,24 @@ export default {
   background-color: transparent;
   color: transparent;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   transition: 0.15s ease;
-  border-bottom: 4px solid #d8d8dd;
+  border-bottom: 0.5rem solid #d8d8dd;
 
   &:focus {
     border: none;
     outline: none;
-    border-bottom: 4px solid #67cc77;
+    border-bottom: 0.4rem solid #67cc77;
   }
 }
 .cli-input__container {
   position: relative;
+  margin-bottom: 3rem;
 }
 .cliDisplay {
   background-color: #d8d8dd;
-  padding: 1rem;
-  border-radius: 5px 5px 0px 0px;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
   text-align: left;
 
   &__userInput {
@@ -223,12 +218,9 @@ export default {
 
   &__focused {
     background-color: #2d2d2d;
-    border-radius: 4px;
+    border-radius: 0.5rem;
     color: #f1f1f1;
-    padding: 8px;
-    padding-left: 6px;
-    padding-right: 6px;
-    margin-right: 4px;
+    padding: 0.3rem 0.6rem;
   }
 }
 </style>

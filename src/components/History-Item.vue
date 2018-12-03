@@ -33,10 +33,10 @@ export default {
     timestamp: function() {
       let seconds = this.item.Time / 1000;
       let minutes = seconds / 60;
-      let hours = minutes / 24;
+      let hours = minutes / 60;
       seconds = Math.floor(seconds % 60);
       minutes = Math.floor(minutes % 60);
-      hours = Math.floor(hours % 24);
+      hours = Math.floor(hours % 24) - 5;
       return hours + ":" + minutes + ":" + seconds;
     }
   }

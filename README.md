@@ -4,10 +4,11 @@
 ```
 npm install
 ```
+You may need to install electron separately.
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
 ```
 
 ### Compiles and minifies for production
